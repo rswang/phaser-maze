@@ -13,6 +13,8 @@ module.exports = {
     game.analytics.trackEvent('scene', 'preload', 'boot');
     game.load.spritesheet('dude', '/assets/dude.png', 32, 48);
     game.load.image('bg', 'assets/bg.jpg');
+    game.load.image('horizontal', 'assets/platform.png');
+    game.load.image('vertical', 'assets/vertical.png');
 
   },
 

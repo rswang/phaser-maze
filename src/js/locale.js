@@ -4,8 +4,11 @@
  */
 module.exports = {
   "en": {
+    "boot": {
+      "labelTitle": "Loading..."
+    },
     "mainMenu": {
-      "labelTitle": "Click to continue"
+      "labelTitle": "Click to start!"
     },
     // "mainGame": {
     //   "labelTitle": "Play my game!"
