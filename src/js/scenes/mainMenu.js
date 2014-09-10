@@ -15,7 +15,7 @@ module.exports = {
 
     var tween,
       style = {
-        font: '30px Arial',
+        font: '24px Montserrat',
         fill: '#ffffff',
         align: 'center'
       };

@@ -132,7 +132,7 @@ module.exports = {
       "labelTitle": "Loading..."
     },
     "mainMenu": {
-      "labelTitle": "Click to start!"
+      "labelTitle": "CLICK TO START!\n\nPLAYER 1: Control the onion head\nwith the up, down, left, and right arrow keys.\n\nPLAYER 2: Control the girl with\nthe A, W, S, and D keys."
     },
     // "mainGame": {
     //   "labelTitle": "Play my game!"
@@ -195,7 +195,7 @@ var game = require('../game'),
   localisation = require('../locale'),
   Label = require('../classes/label');
 
-var cursors, player, player2, stars, platforms;
+var cursors, player, player2, stars, platforms, ledge;
 
 var create = function() {
     game.analytics.trackEvent('scene', 'create', 'mainGame');
@@ -207,92 +207,50 @@ var create = function() {
 
     platforms.enableBody = true;
 
-    var ledge = platforms.create(0, 60, 'horizontal');
-    ledge.body.immovable = true;
+    var horizontalCoordinates = [
+        [0, 60],
+        [60, 140],
+        [0, 220],
+        [180, 500],
+        [440, 520],
+        [180, 420],
+        [-80, 500],
+        [260, 60],
+        [260, 260],
+        [260, 340],
+        [520, 260],
+        [520, 340],
+        [440, 180],
+        [700, 80],
+        [600, 420],
+    ];
 
-    ledge = platforms.create(60, 140, 'horizontal');
-    ledge.body.immovable = true;
+    var verticalCoordinates = [
+        [180, 220],
+        [180, 500],
+        [440, 260],
+        [520, 340],
+        [640, 520],
+        [720, 520],
+        [260, 140],
+        [260, -120],
+        [100, 300],
+        [20, 300],
+        [340, 60],
+        [520, -80],
+        [620, 0],
+        [700, 80],
+    ];
 
-    ledge = platforms.create(0, 220, 'horizontal');
-    ledge.body.immovable = true;
+    for (i = 0; i < horizontalCoordinates.length; i++) {
+        ledge = platforms.create(horizontalCoordinates[i][0], horizontalCoordinates[i][1], 'horizontal');
+        ledge.body.immovable = true;
+    }
 
-    ledge = platforms.create(180, 220, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(180, 500, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(180, 500, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(440, 260, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(520, 340, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(440, 520, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(640, 520, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(720, 520, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(180, 420, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(260, 140, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(260, -120, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(100, 300, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(20, 300, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(-80, 500, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(260, 60, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(340, 60, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(260, 260, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(260, 340, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(520, 260, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(520, 340, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(440, 180, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(520, -80, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(620, 0, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(700, 80, 'vertical');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(700, 80, 'horizontal');
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(600, 420, 'horizontal');
-    ledge.body.immovable = true;
+    for (i = 0; i < verticalCoordinates.length; i++) {
+        ledge = platforms.create(verticalCoordinates[i][0], verticalCoordinates[i][1], 'vertical');
+        ledge.body.immovable = true;
+    }
 
     stars = game.add.group();
 
@@ -387,7 +345,7 @@ var restartGame = function() {
 module.exports = {
   create: create,
   update: update,
-  restartGame: restartGame,
+  restartGame: restartGame, 
 };
 
 },{"../classes/label":3,"../game":4,"../locale":5}],8:[function(require,module,exports){
@@ -409,7 +367,7 @@ module.exports = {
 
     var tween,
       style = {
-        font: '30px Arial',
+        font: '24px Montserrat',
         fill: '#ffffff',
         align: 'center'
       };
