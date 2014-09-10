@@ -1,8 +1,6 @@
-# Hello World
+# Phaser Maze
 
-First Phaser Game
-
-## Pre-requesits
+## Pre-requisites
 
 You will need to have [node][node] and [gulp][gulp] setup on your machine.
 
