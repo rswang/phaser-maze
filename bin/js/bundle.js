@@ -159,7 +159,8 @@ module.exports = {
     game.load.image('bg', 'assets/bg.jpg');
     game.load.image('horizontal', 'assets/platform.png');
     game.load.image('vertical', 'assets/vertical.png');
-
+    game.load.image('star', 'assets/star.png');
+    game.load.spritesheet('player', 'assets/player.png', 96, 130);
   },
 
   create: function () {
@@ -194,7 +195,7 @@ var game = require('../game'),
   localisation = require('../locale'),
   Label = require('../classes/label');
 
-var cursors, player, platforms;
+var cursors, player, player2, stars, platforms;
 
 var create = function() {
     game.analytics.trackEvent('scene', 'create', 'mainGame');
@@ -233,6 +234,12 @@ var create = function() {
     ledge = platforms.create(440, 520, 'horizontal');
     ledge.body.immovable = true;
 
+    ledge = platforms.create(640, 520, 'vertical');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(720, 520, 'vertical');
+    ledge.body.immovable = true;
+
     ledge = platforms.create(180, 420, 'horizontal');
     ledge.body.immovable = true;
 
@@ -263,6 +270,40 @@ var create = function() {
     ledge = platforms.create(260, 340, 'horizontal');
     ledge.body.immovable = true;
 
+    ledge = platforms.create(520, 260, 'horizontal');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(520, 340, 'horizontal');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(440, 180, 'horizontal');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(520, -80, 'vertical');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(620, 0, 'vertical');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(700, 80, 'vertical');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(700, 80, 'horizontal');
+    ledge.body.immovable = true;
+
+    ledge = platforms.create(600, 420, 'horizontal');
+    ledge.body.immovable = true;
+
+    stars = game.add.group();
+
+    stars.enableBody = true;
+
+    var star = stars.create(10, 10, 'star');
+    star.body.immovable = true;
+
+    star = stars.create(770, 570, 'star');
+    star.body.immovable = true;
+
     player = game.add.sprite(0, 0, 'dude');
     game.physics.arcade.enable(player);
     player.body.bounce.y = 0;
@@ -273,11 +314,20 @@ var create = function() {
     player.animations.add('right', [5, 6, 7, 8], 10, true);
     player.animations.add('up', [0], 10, true);
     player.animations.add('down', [0], 10, true);
+
+    player2 = game.add.sprite(0, 0, 'player');
+    player2.scale.setTo(0.4, 0.4);
+    game.physics.arcade.enable(player2);
+    player2.body.bounce.y = 0;
+    player2.body.gravity.y = 0;
+    player2.body.collideWorldBounds = true;
+    player2.animations.add('walk');
     cursors = game.input.keyboard.createCursorKeys();
 };
 
 var update = function() {
     game.physics.arcade.collide(player, platforms);
+    game.physics.arcade.collide(player2, platforms);
 
     player.body.velocity.x = 0;
     if (cursors.left.isDown) {
@@ -297,24 +347,47 @@ var update = function() {
         player.animations.stop();
         player.frame = 4;
     }
+
+    var left2 = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    var right2 = game.input.keyboard.addKey(Phaser.Keyboard.D);
+    var up2 = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    var down2 = game.input.keyboard.addKey(Phaser.Keyboard.S);
+
+    if (left2.isDown) {
+        player2.body.velocity.x = -150;
+        player2.animations.play('walk');
+    } else if (right2.isDown) {
+        player2.body.velocity.x = 150;
+        player2.animations.play('walk');
+    } else if (up2.isDown) {
+        player2.body.velocity.y = -150;
+        player2.animations.stop();
+    } else if (down2.isDown) {
+        player2.body.velocity.y = 150;
+        player2.animations.stop();
+    } else {
+        player2.body.velocity.y = 0;
+        player2.animations.stop();
+        player2.frame = 4;
+    }
+
+    var restartKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
+    if (restartKey.isDown) {
+      restartGame();
+    }
     
-    //  And this starts the animation playing by using its key ("walk")
-    //  30 is the frame rate (30fps)
-    //  true means it will loop when it finishes
-    // player.animations.play('walk', 10, true);
 };
+
+var restartGame = function() {
+  game.analytics.trackEvent('scene', 'create', 'restartGame');
+
+   game.state.start('mainMenu');
+}
 
 module.exports = {
   create: create,
   update: update,
-
-  restartGame: function () {
-
-    game.analytics.trackEvent('scene', 'create', 'restartGame');
-
-    game.state.start('mainMenu');
-  }
-
+  restartGame: restartGame,
 };
 
 },{"../classes/label":3,"../game":4,"../locale":5}],8:[function(require,module,exports){

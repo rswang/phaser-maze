@@ -15,7 +15,8 @@ module.exports = {
     game.load.image('bg', 'assets/bg.jpg');
     game.load.image('horizontal', 'assets/platform.png');
     game.load.image('vertical', 'assets/vertical.png');
-
+    game.load.image('star', 'assets/star.png');
+    game.load.spritesheet('player', 'assets/player.png', 96, 130);
   },
 
   create: function () {
